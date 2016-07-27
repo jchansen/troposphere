@@ -61,7 +61,7 @@ export default React.createClass({
 
               <div className="col-md-12">
 
-                <h2>Test Getting Started</h2>
+                <h2>Getting Started</h2>
                 <div className="row calls-to-action">
                   <div className="col-md-3 col-sm-4">
                     <CallToAction
