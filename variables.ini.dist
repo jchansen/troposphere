@@ -2,6 +2,8 @@
 SERVER_URL =
 ASSETS_PATH =
 THEME_PATH =
+LDAP_SERVER =
+LDAP_SERVER_DN =
 
 [nginx]
 ENABLE_HTTP2 = ; enable if http2 module available in nginx build
