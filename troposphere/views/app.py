@@ -107,8 +107,14 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
         if login_auth_type:
             login_auth_allowed.append({'method': login_auth_type, 'provider': auth_provider})
     use_login_selection = getattr(settings, "USE_LOGIN_SELECTION", False)
+
+    access_token = request.session.get('access_token')
+
+    if request.user.is_authenticated() and getattr(settings, "MOCK_ACCESS_TOKEN", False):
+        access_token = getattr(settings, "MOCK_ACCESS_TOKEN")
+
     template_params = {
-        'access_token': request.session.get('access_token'),
+        'access_token': access_token,
         'use_login_selection': use_login_selection,
         'login_auth_allowed': login_auth_allowed,
         'org_name': settings.ORG_NAME,
@@ -326,14 +332,13 @@ def application_backdoor(request):
     return redirect('/login?%s' % (urlencode(query_arguments),))
 
 
-
 def application(request):
     maintenance_records, disabled_login, in_maintenance = \
         get_maintenance(request)
     notice_info = get_notice(request)
 
     if should_route_to_maintenace(request, in_maintenance):
-        logger.warn('%s has actice session but is NOT in staff_list_usernames'
+        logger.warn('%s has active session but is NOT in staff_list_usernames'
             % request.user.username)
         logger.warn('- routing user')
         return redirect('maintenance')
