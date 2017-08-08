@@ -4,11 +4,20 @@ pipeline {
     stage('Build') {
       steps {
         sh '''
-          echo "Because I am using the 'Git' Source control in the options above, i know my 1.${GIT_BRANCH} 2.$GIT_BRANCH 3.${BRANCH_NAME}"
+          echo "Building git branch: ${BRANCH_NAME}"
         '''
         sh '''
           git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
         '''
+        sh '''
+          git clone https://github.com/cyverse/clank.git
+        '''
+        sh '''
+          virtualenv clank_env
+          . clank_env/bin/activate
+          pip install -r clank/requirements.txt
+        '''
+
       }
     }
     stage('Test') {
