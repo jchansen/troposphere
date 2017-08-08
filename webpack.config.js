@@ -15,7 +15,7 @@ var path = require('path');
 var webpack = require('webpack');
 var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var { getIfUtils, removeEmpty } = require('webpack-config-utils');
+var { getIfUtils, removeEmpty, propIf } = require('webpack-config-utils');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var BundleTracker = require('webpack-bundle-tracker');
 var fs = require('fs');
@@ -23,15 +23,17 @@ var fs = require('fs');
 // Theme Images
 var themeImagesPath = require('./themeImagesPath');
 
-module.exports = function(env) {
-  var ENV = env.webpack || env;
-  var HOST = env.host || 'localhost';
-  var PORT = env.port || 8080;
-  var PROTOCOL = env.https ? 'https' : 'http';
-  var SSL_KEY = env.sslKey || null;
-  var SSL_CERT = env.sslCert || null;
+module.exports = function(ENV) {
+  var { ifProduction } = getIfUtils(ENV);
 
-  var { ifProduction, ifNotProduction } = getIfUtils(ENV);
+  // Preface the webpack-dev-server command with CSS_IN_JS=true for CSS hot
+  // reloading.
+  //
+  // By default we extract CSS from the larger bundle into a separate asset
+  // that is parsed/loaded before any js, this ensures that the content of our
+  // html will be styled the first time it is shown. However, CSS hot
+  // reloading only works if the CSS is shipped in the JS.
+  var extractCSS = ifProduction(true, !process.env.CSS_IN_JS);
 
   var PATHS = {
     output: path.join(__dirname, "/troposphere/assets/bundles"),
@@ -40,11 +42,8 @@ module.exports = function(env) {
     images: path.join(__dirname, "/troposphere/static/images/"),
     theme: path.join(__dirname, "/troposphere/static/theme/"),
     themeImages: themeImagesPath,
-    public: ifProduction(
-      "/assets/bundles/",
-      `${PROTOCOL}://${HOST}:${PORT}/assets/bundles/`
-    )
-  };
+    public: "/assets/bundles/"
+};
 
   return {
     devtool: ifProduction('source-map', 'eval'),
@@ -52,7 +51,7 @@ module.exports = function(env) {
       vendor: Object.keys(pkg.dependencies),
       app: "./main",
       analytics: "./analytics",
-      public: ifProduction("./public_site/main", "./public_site/main")
+      public: "./public_site/main"
     }),
     output: {
       filename: ifProduction(
@@ -60,7 +59,7 @@ module.exports = function(env) {
         'bundle.[name].js'
       ),
       path: PATHS.output,
-      pathinfo: ifNotProduction(),
+      pathinfo: ifProduction(false, true),
       publicPath: PATHS.public
     },
     context: PATHS.context,
@@ -108,7 +107,7 @@ module.exports = function(env) {
         },
         {
           test: /\.css/,
-          use: ifProduction(ExtractTextPlugin.extract({
+          use: propIf(extractCSS, ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
               {
@@ -132,7 +131,7 @@ module.exports = function(env) {
         },
         {
           test: /\.less$/,
-          use: ifProduction(ExtractTextPlugin.extract({
+          use: propIf(extractCSS, ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
               {
@@ -158,7 +157,7 @@ module.exports = function(env) {
         },
         {
           test: /\.scss$/,
-          use: ifProduction(ExtractTextPlugin.extract({
+          use: propIf(extractCSS, ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
               {
@@ -250,13 +249,6 @@ module.exports = function(env) {
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
-      port: PORT,
-      host: env.https ? '0.0.0.0' : HOST,
-      https: env.https ? {
-        key: fs.readFileSync(SSL_KEY),
-        cert: fs.readFileSync(SSL_CERT)
-      } : false,
-      disableHostCheck: !!env.https
     }
   };
 };

@@ -58,9 +58,10 @@ const InstanceDetail = React.createClass({
         var metrics = globals.SHOW_INSTANCE_METRICS
             ? <InstanceMetricsSection instance={instance} />
             : "";
-        var projects = instance.get('projects'),
-            project_id = (projects) ? projects[0] : -1,
-            project = ProjectStore.get(project_id);
+        let project = ProjectStore.get(instance.get('project').id);
+        if (!project) {
+            return (<div className="loading" />);
+        }
 
         return (
         <div className="container">
