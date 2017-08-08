@@ -16,10 +16,10 @@ pipeline {
           git clone https://github.com/cyverse/clank.git
         '''
         sh '''
-          virtualenv clank_env
+          virtualenv c_env
         '''
         sh '''
-          . clank_env/bin/activate
+          . c_env/bin/activate
           pip install -r clank/requirements.txt
         '''
 
