@@ -3,7 +3,12 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo 'Skipping build...'
+        sh '''
+          echo "Because I am using the 'Git' Source control in the options above, i know my ${GIT_BRANCH}"
+        '''
+        sh '''
+          git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
+        '''
       }
     }
     stage('Test') {
