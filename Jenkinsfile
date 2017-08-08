@@ -6,6 +6,8 @@ pipeline {
         sh '''
           echo "Building git branch: ${BRANCH_NAME}"
           whoami
+          rm -rf atmo-dev
+          rm -rf clank
         '''
         sh '''
           git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
