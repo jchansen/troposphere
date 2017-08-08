@@ -5,6 +5,7 @@ pipeline {
       steps {
         sh '''
           echo "Building git branch: ${BRANCH_NAME}"
+          whoami
         '''
         sh '''
           git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
@@ -14,6 +15,8 @@ pipeline {
         '''
         sh '''
           virtualenv clank_env
+        '''
+        sh '''
           . clank_env/bin/activate
           pip install -r clank/requirements.txt
         '''
