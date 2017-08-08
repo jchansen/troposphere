@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         sh '''
-          echo "Because I am using the 'Git' Source control in the options above, i know my ${GIT_BRANCH}"
+          echo "Because I am using the 'Git' Source control in the options above, i know my 1.${GIT_BRANCH} 2.$GIT_BRANCH"
         '''
         sh '''
           git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
