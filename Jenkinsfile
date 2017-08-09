@@ -2,17 +2,14 @@ pipeline {
   agent any
   stages {
     stage('Example1') {
-      steps {
-        when {
-          expression {
-            sh '''
-              echo "Hello from master..."
-            '''
-            return env.BRANCH_NAME == 'master'
-          }
+      when {
+        expression {
+          env.BRANCH_NAME == 'master'
         }
+      }
+      steps {
         sh '''
-          echo "Forcing step to exist..."
+          echo "Hello from master..."
         '''
       }
     }
