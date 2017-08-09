@@ -11,10 +11,11 @@ pipeline {
     }
     stage('Example2') {
       steps {
-        expression {env.BRANCH_NAME != 'master' }
-        sh '''
-          echo "Hello from NOT master..."
-        '''
+        if (env.BRANCH_NAME == "master") {
+          sh '''
+            echo "Hello from NOT master..."
+          '''
+        }
       }
     }
     stage('Build') {
