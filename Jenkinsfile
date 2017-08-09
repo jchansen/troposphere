@@ -37,8 +37,8 @@ pipeline {
     stage('Test') {
       steps {
         sh '''
-          sudo su
-          . env/bin/activate
+          #sudo su
+          #. env/bin/activate
           #./manage.py  makemigrations --dry-run --check
           #npm run build
           #npm run lint
