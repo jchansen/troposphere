@@ -1,6 +1,22 @@
 pipeline {
   agent any
   stages {
+    stage('Master Branch says Hello') {
+      expression { env.BRANCH_NAME == 'master' }
+      steps {
+        sh '''
+          echo "Hello!...says master"
+        '''
+      }
+    }
+    stage('NOT Master Branch says Hello') {
+      expression { env.BRANCH_NAME != 'master' }
+      steps {
+        sh '''
+          echo "Hello!...says NOT master"
+        '''
+      }
+    }
     stage('Build') {
       steps {
         sh '''
@@ -9,15 +25,6 @@ pipeline {
           rm -rf atmo-dev
           rm -rf clank
         '''
-        if (env.BRANCH_NAME == 'master') {
-          sh '''
-            echo "Branch is master!"
-          '''
-        } else {
-          sh '''
-            echo "Branch is NOT master!"
-          '''
-        }
         sh '''
           #git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
         '''
@@ -69,4 +76,14 @@ pipeline {
       }
     }
   }
+}
+
+if (env.BRANCH_NAME == 'master') {
+  sh '''
+    echo "Branch is master!"
+  '''
+} else {
+  sh '''
+    echo "Branch is NOT master!"
+  '''
 }
