@@ -16,6 +16,9 @@ pipeline {
             echo "Hello from NOT master..."
           '''
         }
+        sh '''
+          echo "Work please?"
+        '''
       }
     }
     stage('Build') {
