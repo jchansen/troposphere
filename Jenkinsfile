@@ -2,11 +2,7 @@ pipeline {
   agent any
   stages {
     stage('Example') {
-      if (env.BRANCH_NAME == 'master') {
-        echo 'I only execute on the master branch'
-      } else {
-        echo 'I execute elsewhere'
-      }
+      expression {env.BRANCH_NAME == 'master' }
     }
     stage('Build') {
       steps {
