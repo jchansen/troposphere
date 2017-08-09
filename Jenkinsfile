@@ -1,9 +1,20 @@
 pipeline {
   agent any
   stages {
-    stage('Example') {
+    stage('Example1') {
       steps {
         expression {env.BRANCH_NAME == 'master' }
+        sh '''
+          echo "Hello from master..."
+        '''
+      }
+    }
+    stage('Example2') {
+      steps {
+        expression {env.BRANCH_NAME != 'master' }
+        sh '''
+          echo "Hello from NOT master..."
+        '''
       }
     }
     stage('Build') {
