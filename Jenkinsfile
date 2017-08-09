@@ -5,10 +5,10 @@ pipeline {
       steps {
         when {
           expression {
-            return env.BRANCH_NAME == 'master'
             sh '''
               echo "Hello from master..."
             '''
+            return env.BRANCH_NAME == 'master'
           }
         }
       }
