@@ -28,8 +28,8 @@ pipeline {
           pip install -r dev_requirements.txt
         '''
         sh '''
-          cp ./variables.ini.dist ./variables.ini
-          ./configure
+          #cp ./variables.ini.dist ./variables.ini
+          #./configure
         '''
 
       }
