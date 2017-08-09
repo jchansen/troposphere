@@ -46,26 +46,26 @@ pipeline {
           rm -rf clank
         '''
         sh '''
-          #git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
+          git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
         '''
         sh '''
-          #git clone https://github.com/cyverse/clank.git
+          git clone https://github.com/cyverse/clank.git
         '''
         sh '''
-          #virtualenv c_env
+          virtualenv c_env
         '''
         sh '''
-          #. c_env/bin/activate
-          #pip install -r clank/requirements.txt
+          . c_env/bin/activate
+          pip install -r clank/requirements.txt
         '''
         sh '''
-          #virtualenv env
-          #. env/bin/activate
-          #pip install -r dev_requirements.txt
+          virtualenv env
+          . env/bin/activate
+          pip install -r dev_requirements.txt
         '''
         sh '''
-          #cp ./variables.ini.dist ./variables.ini
-          #./configure
+          cp ./variables.ini.dist ./variables.ini
+          ./configure
         '''
       }
     }
@@ -73,10 +73,10 @@ pipeline {
       steps {
         sh '''
           sudo su
-          #. env/bin/activate
-          #./manage.py  makemigrations --dry-run --check
-          #npm run build
-          #npm run lint
+          . env/bin/activate
+          ./manage.py  makemigrations --dry-run --check
+          npm run build
+          npm run lint
         '''
       }
     }
