@@ -40,30 +40,37 @@ pipeline {
     stage('Build') {
       steps {
         sh '''
+          sudo su
           echo "Building git branch: ${BRANCH_NAME}"
           whoami
           rm -rf atmo-dev
           rm -rf clank
         '''
         sh '''
+          sudo su
           git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
         '''
         sh '''
+          sudo su
           git clone https://github.com/cyverse/clank.git
         '''
         sh '''
+          sudo su
           virtualenv c_env
         '''
         sh '''
+          sudo su
           . c_env/bin/activate
           pip install -r clank/requirements.txt
         '''
         sh '''
+          sudo su
           virtualenv env
           . env/bin/activate
           pip install -r dev_requirements.txt
         '''
         sh '''
+          sudo su
           cp ./variables.ini.dist ./variables.ini
           ./configure
         '''
