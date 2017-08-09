@@ -77,13 +77,3 @@ pipeline {
     }
   }
 }
-
-if (env.BRANCH_NAME == 'master') {
-  sh '''
-    echo "Branch is master!"
-  '''
-} else {
-  sh '''
-    echo "Branch is NOT master!"
-  '''
-}
