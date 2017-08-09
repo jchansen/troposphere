@@ -80,11 +80,10 @@ pipeline {
     stage('Test') {
       steps {
         sh '''
-          sudo su
           . env/bin/activate
-          ./manage.py  makemigrations --dry-run --check
-          npm run build
-          npm run lint
+          sudo ./manage.py  makemigrations --dry-run --check
+          sudo npm run build
+          sudo npm run lint
         '''
       }
     }
