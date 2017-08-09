@@ -11,6 +11,9 @@ pipeline {
             return env.BRANCH_NAME == 'master'
           }
         }
+        sh '''
+          echo "Forcing step to exist..."
+        '''
       }
     }
     stage('Example2') {
