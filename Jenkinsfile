@@ -23,9 +23,9 @@ pipeline {
           #pip install -r clank/requirements.txt
         '''
         sh '''
-          virtualenv env
-          . env/bin/activate
-          pip install -r dev_requirements.txt
+          #virtualenv env
+          #. env/bin/activate
+          #pip install -r dev_requirements.txt
         '''
         sh '''
           #cp ./variables.ini.dist ./variables.ini
