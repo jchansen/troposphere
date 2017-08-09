@@ -3,10 +3,14 @@ pipeline {
   stages {
     stage('Example1') {
       steps {
-        expression {env.BRANCH_NAME == 'master' }
-        sh '''
-          echo "Hello from master..."
-        '''
+        when {
+          expression {
+            return env.BRANCH_NAME == 'master'
+            sh '''
+              echo "Hello from master..."
+            '''
+          }
+        }
       }
     }
     stage('Example2') {
