@@ -1,6 +1,22 @@
 pipeline {
   agent any
   stages {
+  stage('Master Branch says Hello') {
+      expression { env.BRANCH_NAME == 'master' }
+      steps {
+        sh '''
+          echo "Hello!...says master"
+        '''
+      }
+    }
+    stage('NOT Master Branch says Hello') {
+      expression { env.BRANCH_NAME != 'master' }
+      steps {
+        sh '''
+          echo "Hello!...says NOT master"
+        '''
+      }
+    }
     stage('Build') {
       steps {
         sh '''
