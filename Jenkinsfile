@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Example1') {
+    stage('Example: branch == master') {
       when {
         expression {
           env.BRANCH_NAME == 'master'
@@ -13,10 +13,22 @@ pipeline {
         '''
       }
     }
-    stage('Example2') {
+    stage('Example: branch == jenkins') {
       when {
         expression {
           env.BRANCH_NAME == 'jenkins'
+        }
+      }
+      steps {
+        sh '''
+          echo "Hello from jenkins..."
+        '''
+      }
+    }
+    stage('Example: branch is NOT master') {
+      when {
+        expression {
+          env.BRANCH_NAME != 'master'
         }
       }
       steps {
