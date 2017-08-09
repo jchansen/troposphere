@@ -73,6 +73,7 @@ pipeline {
         sh '''
           sudo su
           cp variables.ini.dist variables.ini
+          . env/bin/activate
           ./configure
         '''
       }
