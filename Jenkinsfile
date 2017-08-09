@@ -11,13 +11,9 @@ pipeline {
     }
     stage('Example2') {
       steps {
-        if (env.BRANCH_NAME == "master") {
-          sh '''
-            echo "Hello from NOT master..."
-          '''
-        }
+        expression {env.BRANCH_NAME == 'jenkins' }
         sh '''
-          echo "Work please?"
+          echo "Hello from NOT master..."
         '''
       }
     }
