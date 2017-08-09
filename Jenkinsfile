@@ -93,9 +93,13 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh '''
-          echo "Skipping deploy..."
-        '''
+        ansiblePlaybook(
+          playbook: '/opt/ansible/ansible-troposphere/troposphere/playbook.yml',
+          inventory: '/etc/ansible/hosts',
+          extras: '--extra-vars "host=atmo-dev secrets_git_url=git@gitlab.cyverse.org:atmosphere/atmo-dev.git secrets_path=/opt/dev/atmo-dev clank_git_url=https://github.com/cyverse/clank.git clank_path=/opt/dev/clank clank_virtualenv_path=/opt/dev/clank_env"',
+          colorized: true,
+          sudo: true
+        )
       }
     }
   }
