@@ -9,7 +9,7 @@ pipeline {
           rm -rf atmo-dev
           rm -rf clank
         '''
-        if (${BRANCH_NAME} == 'master') {
+        if (env.BRANCH_NAME == 'master') {
           sh '''
             echo "Branch is master!"
           '''
@@ -46,7 +46,7 @@ pipeline {
     stage('Test') {
       steps {
         sh '''
-          #sudo su
+          sudo su
           #. env/bin/activate
           #./manage.py  makemigrations --dry-run --check
           #npm run build
@@ -56,6 +56,9 @@ pipeline {
     }
     stage('Deploy') {
       steps {
+        sh '''
+          echo "Skipping deploy..."
+        '''
         #ansiblePlaybook(
         #    playbook: '/opt/ansible/ansible-troposphere/troposphere/playbook.yml',
         #    inventory: '/etc/ansible/hosts',
