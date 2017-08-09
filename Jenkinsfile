@@ -71,10 +71,9 @@ pipeline {
           pip install -r dev_requirements.txt
         '''
         sh '''
-          sudo su
-          cp variables.ini.dist variables.ini
+          sudo cp variables.ini.dist variables.ini
           . env/bin/activate
-          ./configure
+          sudo ./configure
         '''
       }
     }
