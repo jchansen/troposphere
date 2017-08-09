@@ -2,7 +2,9 @@ pipeline {
   agent any
   stages {
     stage('Example') {
-      expression {env.BRANCH_NAME == 'master' }
+      steps {
+        expression {env.BRANCH_NAME == 'master' }
+      }
     }
     stage('Build') {
       steps {
