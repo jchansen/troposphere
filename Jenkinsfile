@@ -2,6 +2,7 @@ pipeline {
   agent any
   stages {
     stage('Build') {
+      expression { env.BRANCH_NAME == 'master' }
       steps {
         sh '''
           echo "Building git branch: ${BRANCH_NAME}"
