@@ -84,10 +84,12 @@ pipeline {
           #./manage.py  makemigrations --dry-run --check
         '''
         sh '''
-          sudo npm run build
+          sudo su
+          npm run build
         '''
         sh '''
-          sudo npm run lint
+          sudo su
+          npm run lint
         '''
       }
     }
