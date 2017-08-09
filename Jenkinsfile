@@ -45,6 +45,7 @@ pipeline {
           whoami
           rm -rf atmo-dev
           rm -rf clank
+          rm variables.ini
         '''
         sh '''
           sudo su
