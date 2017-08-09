@@ -71,7 +71,7 @@ pipeline {
         '''
         sh '''
           sudo su
-          cp ./variables.ini.dist ./variables.ini
+          cp variables.ini.dist variables.ini
           ./configure
         '''
       }
