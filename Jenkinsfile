@@ -48,6 +48,9 @@ pipeline {
           rm -rf variables.ini
         '''
         sh '''
+          sudo -u postgres createdb troposphere_${BUILD_NUMBER}
+        '''
+        sh '''
           sudo su
           git clone git@gitlab.cyverse.org:atmosphere/atmo-dev.git
         '''
@@ -74,6 +77,9 @@ pipeline {
           sudo cp variables.ini.dist variables.ini
           . env/bin/activate
           sudo ./configure
+        '''
+        sh '''
+          sudo npm install
         '''
       }
     }
