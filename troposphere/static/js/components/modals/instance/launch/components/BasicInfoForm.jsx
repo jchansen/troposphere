@@ -10,6 +10,8 @@ export default React.createClass({
         projectList: React.PropTypes.instanceOf(Backbone.Collection),
         imageVersion: React.PropTypes.instanceOf(Backbone.Model),
         imageVersionList: React.PropTypes.instanceOf(Backbone.Collection),
+        identity: React.PropTypes.instanceOf(Backbone.Model),
+        identityList: React.PropTypes.instanceOf(Backbone.Collection),
         project: React.PropTypes.instanceOf(Backbone.Model),
         image: React.PropTypes.instanceOf(Backbone.Model),
         instanceName: React.PropTypes.string,
@@ -55,7 +57,8 @@ export default React.createClass({
             project,
             projectList,
             instanceName,
-            showValidationErr
+            showValidationErr,
+            waitingOnLaunch
         } = this.props;
         let hasErrorClass;
         let errorMessage = null;
@@ -95,6 +98,7 @@ export default React.createClass({
                     Instance Name
                 </label>
                 <input required
+                    disabled={waitingOnLaunch}
                     type="Name"
                     className="form-control"
                     id="instanceName"
@@ -109,6 +113,7 @@ export default React.createClass({
                     Base Image Version
                 </label>
                 <SelectMenu current={imageVersion}
+                    disabled={waitingOnLaunch}
                     list={this.props.imageVersionList}
                     optionName={item => item.get("name")}
                     onSelect={this.props.onVersionChange} />
@@ -118,6 +123,7 @@ export default React.createClass({
                     Project
                 </label>
                 <SelectMenu current={project}
+                    disabled={waitingOnLaunch}
                     list={projectList}
                     optionName={item => item.get("name")}
                     onSelect={this.props.onProjectChange} />

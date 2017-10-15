@@ -1,6 +1,6 @@
 import React from "react";
 import AddScripts from "./AddScripts";
-import CreateScript from "./CreateScript";
+import CreateScript from "components/common/boot_script/CreateScript";
 
 
 export default React.createClass({
@@ -38,7 +38,9 @@ export default React.createClass({
 
     renderCreateScript: function() {
         return (
-        <CreateScript {...this.props} close={this.onCloseCreateScript} />
+        <CreateScript {...this.props}
+            close={this.onCloseCreateScript}
+            onCreate={this.props.onAddAttachedScript} />
         )
     },
 

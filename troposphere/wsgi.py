@@ -24,12 +24,13 @@ sys.path.insert(1, root_dir)
 os.environ["DJANGO_SETTINGS_MODULE"] = "troposphere.settings"
 from django.conf import settings
 
-if hasattr(settings, "NEW_RELIC_ENVIRONMENT"):
+if settings.NEW_RELIC_CONFIGURED:
   try:
       import newrelic.agent
+      from troposphere.settings import new_relic as new_relic_settings
       newrelic.agent.initialize(
         os.path.join(root_dir, "extras/newrelic/troposphere_newrelic.ini"),
-        settings.NEW_RELIC_ENVIRONMENT)
+        new_relic_settings.NEW_RELIC_ENVIRONMENT)
       print "[T]Plugin: New Relic initialized!"
   except ImportError, bad_import:
       print "[T]Warning: newrelic not installed.."

@@ -2,6 +2,7 @@ import ModalHelpers from "components/modals/ModalHelpers";
 
 import InstanceImageWizardModal from "components/modals/instance/InstanceImageWizardModal";
 import actions from "actions";
+import context from "context";
 
 
 export default {
@@ -11,9 +12,10 @@ export default {
             throw new Error("Missing instance");
 
         var instance = params.instance,
+            isImageOwner = context.profile.get('is_staff') || instance.get("image").user == instance.get("user").id,
             props = {
                 instance: instance,
-                imageOwner: instance.get("image").user == instance.get("user").id
+                imageOwner: isImageOwner
             //NOTE:onConfirm set in function below, as part of ModalHelpers.renderModal
             };
 
@@ -28,6 +30,7 @@ export default {
                 minMem: params.minMem,
                 minCPU: params.minCPU,
                 versionChanges: params.versionChanges,
+                newApplicationAccessList: params.newAccessList,
                 newMachineOwner: instance.get("user").id,
                 versionFork: params.newImage,
                 visibility: params.visibility,

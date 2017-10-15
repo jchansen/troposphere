@@ -4,22 +4,24 @@ import Utils from "../Utils";
 
 export default {
 
-    create: function(params) {
-        if (!params.title)
+    create: function({ title, type, text, strategy, wait_for_deploy }) {
+        if (!title)
             throw new Error("Missing title");
-        if (!params.type)
+        if (!type)
             throw new Error("Missing type");
-        if (!params.text)
+        if (!text)
             throw new Error("Missing text");
-
-        var title = params.title,
-            script_type = params.type,
-            text = params.text;
+        if (!strategy)
+            throw new Error("Missing strategy");
+        if (wait_for_deploy == null)
+            throw new Error("Missing wait_for_deploy");
 
         var script = new Script({
-            title: title,
-            type: script_type,
-            text: text
+            title,
+            type,
+            text,
+            strategy,
+            wait_for_deploy
         });
 
         // Add the script optimistically
